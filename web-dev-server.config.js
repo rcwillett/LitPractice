@@ -12,6 +12,9 @@ if (!['dev', 'prod'].includes(mode)) {
 }
 
 export default {
+  open: true,
+  watch: true,
+  appIndex: 'index.html',
   nodeResolve: {exportConditions: mode === 'dev' ? ['development'] : []},
   preserveSymlinks: true,
   plugins: [
