@@ -1,6 +1,8 @@
+import { consume } from "@lit/context";
 import { LitElement, html, css } from "lit";
-import { customElement, property } from "lit/decorators.js";
+import { customElement } from "lit/decorators.js";
 import "../LitButton/lit-button";
+import { CountContext, IncrementCountContext, DecrementCountContext } from "../../contexts/CounterContext";
 
 @customElement("life-counter")
 export class LifeCounter extends LitElement {
@@ -13,25 +15,31 @@ export class LifeCounter extends LitElement {
             font-family: sans-serif;
             min-height: 200px;
         }
+
+        h1 {
+            align-items: center;
+        }
     `;
 
-    @property({ type: Number })
-    life = 20;
+    @consume({ context: CountContext, subscribe: true })
+    count?: number;
 
-    decrement() {
-        this.life--;
-    }
+    @consume({ context: IncrementCountContext })
+    increment?: () => void;
 
-    increment() {
-        this.life++;
-    }
+    @consume({ context: DecrementCountContext })
+    decrement?: () => void;
 
     override render() {
-        return html`
-            <lit-button class="secondary" @click=${this.decrement}>-</lit-button>
-            <h1 class="life-total-text">${this.life}</h1>
-            <lit-button class="primary" @click=${this.increment}>+</lit-button>
-        `;
+        if (this.count != undefined) {
+            return html`
+                <lit-button class="secondary" @click=${this.decrement}>-</lit-button>
+                <h1>${this.count}</h1>
+                <lit-button class="primary" @click=${this.increment}>+</lit-button>
+            `;
+        }
+
+        return html`<div>ERROR</div>`;
     }
 };
 
