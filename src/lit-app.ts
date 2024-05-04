@@ -1,16 +1,16 @@
-import { LitElement, html, css } from "lit";
+import { LitElement, html } from "lit";
 import { customElement, property } from "lit/decorators.js";
+import "./components/LifeCounter/life-counter";
 
 @customElement("lit-app")
 export class LitApp extends LitElement {
-    static override styles = css``;
-
     @property({ type: String })
     message = "Goodbye, world!";
  
     override render() {
         return html`
-            <h1>${this.message}</h1>
+            <h1>Life Counter</h1>
+            <life-counter></life-counter>
         `;
     }
 }
